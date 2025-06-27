@@ -1,0 +1,55 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <a class="btn btn-primary mt-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+    FinMailing
+    </a>
+    {% if user.is_authenticated %}
+        <div class="d-flex">
+            <div class="p-2 flex-fill mt-3">Добро пожаловать в наш магазин, {{ user }}!</div>
+        </div>
+    {% else %}
+        <div class="d-flex">
+            <div class="p-2 flex-fill mt-3">Для дальнейших действий необходимо авторизоваться!</div>
+        </div>
+    {% endif %}
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Выберите необходимое действие в главном меню</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Главное меню
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">1</a></li>
+                    <li><a class="dropdown-item" href="#">2</a></li>
+                    <li><a class="dropdown-item" href="#">3</a></li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <form method="post" action="#" style="display: inline;">
+                            {% csrf_token %}
+                                <button type="submit" class="dropdown-item">Выйти</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="#">Войти</a></li>
+                        <li><a class="dropdown-item" href="#">Зарегистрироваться</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% if categories %}
+            <div class="dropdown mt-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Категории товаров
+                </button>
+                <ul class="dropdown-menu">
+                    {% for cat in categories %}
+                    <li><a class="dropdown-item" href="#">Что-то</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

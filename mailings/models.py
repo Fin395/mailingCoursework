@@ -3,7 +3,7 @@ from django.db import models
 
 class MailingRecipient(models.Model):
     email = models.CharField(unique=True, max_length=100, verbose_name='Email')
-    personal_details = models.CharField(max_length=100, blank=True, null=True, verbose_name='ФИО')
+    personal_details = models.CharField(max_length=100, verbose_name='ФИО')
     commentary = models.TextField(verbose_name="Комментарий", blank=True, null=True)
 
     def __str__(self):

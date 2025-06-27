@@ -1,0 +1,12 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Список получателей{% endblock %}</title>
+{% block content %}
+    {% for object in object_list %}
+        <h5 class="mt-0">{{object.email}}</h5>
+        <p>{{object.personal_details}}</p>
+        <p>{{object.commentary}}</p>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailingrecipient_detail' object.pk %}">Данные получателя</a>
+    {% endfor %}
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailingrecipient_main' %}">На главную</a>
+
+{% endblock %}

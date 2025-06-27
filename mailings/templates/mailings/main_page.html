@@ -1,0 +1,12 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Главная{% endblock %}</title>
+
+{% block content %}
+<div class="card text-center">
+<div class="card-body">
+    <h5 class="card-title">Добро пожаловать в мой сервис рассылки сообщений.</h5>
+    <a href="{% url 'mailings:mailingrecipient_list' %}" class="btn btn-primary">Список клиентов</a>
+    <a href="{% url 'mailings:mailingrecipient_create' %}" class="btn btn-primary">Создать нового клиента</a>
+</div>
+  </div>
+{% endblock %}
