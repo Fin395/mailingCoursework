@@ -1,5 +1,6 @@
 from django import forms
 
+from mailings.mixins import StyleFormMixin
 from mailings.models import MailingRecipient
 
 
@@ -11,7 +12,7 @@ from mailings.models import MailingRecipient
 
 # FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
-class MailingRecipientForm(forms.ModelForm):   # добавить StyleFormMixin
+class MailingRecipientForm(StyleFormMixin, forms.ModelForm):   # добавить StyleFormMixin
     class Meta:
         model = MailingRecipient
         fields = ['email', 'personal_details', 'commentary']

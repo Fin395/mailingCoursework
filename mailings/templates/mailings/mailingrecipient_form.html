@@ -1,6 +1,7 @@
 {% extends 'mailings/base.html' %}
 <title>{% block title %}Новый получатель{% endblock %}</title>
 {% block content %}
+<div class="mb-3">
     <h2>Форма получателя</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -12,6 +13,7 @@
             <a href="{% url 'mailings:mailingrecipient_list' %}" class="btn btn-secondary">Отмена</a>
         {% endif %}
     </form>
+</div>
 {% endblock %}
 
 
