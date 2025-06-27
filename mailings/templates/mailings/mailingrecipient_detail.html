@@ -13,7 +13,7 @@
             получателей</a>
         <a class="card-link link-outline-danger" href="{% url 'mailings:mailingrecipient_update' object.pk %}">Редактировать</a>
         <a class="card-link" href="{% url 'mailings:mailingrecipient_delete' object.pk %}">Удалить</a>
-        <a class="card-link" href="{% url 'mailings:mailingrecipient_main' %}">На главную</a>
+        <a class="card-link" href="{% url 'mailings:main' %}">На главную</a>
     </div>
 </div>
 {% endblock %}

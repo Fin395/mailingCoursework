@@ -1,5 +1,5 @@
 {% extends 'mailings/base.html' %}
-<title>{% block title %}Список получателей{% endblock %}</title>
+<title>{% block title %}Список сообщений{% endblock %}</title>
 {% block content %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for object in object_list %}
@@ -7,9 +7,9 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-body">
-                <h5 class="card-title">Получатель № {{ object.pk }}</h5>
-                <p class="card-text"> {{ object.email }}</p>
-                <a href="{% url 'mailings:mailingrecipient_detail' object.pk %}" class="card-link">Данные получателя</a>
+                <h5 class="card-title">Сообщение № {{ object.pk }}</h5>
+                <p class="card-text"> Тема: {{ object.subject|truncatechars:10 }}</p>
+                <a href="{% url 'mailings:emailmessage_detail' object.pk %}" class="card-link">Просмотр сообщения</a>
                 <a href="{% url 'mailings:main' %}" class="card-link">На главную</a>
             </div>
         </div>

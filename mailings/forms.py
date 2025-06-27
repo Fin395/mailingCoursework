@@ -1,7 +1,7 @@
 from django import forms
 
 from mailings.mixins import StyleFormMixin
-from mailings.models import MailingRecipient
+from mailings.models import MailingRecipient, EmailMessage
 
 
 #
@@ -12,7 +12,7 @@ from mailings.models import MailingRecipient
 
 # FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
-class MailingRecipientForm(StyleFormMixin, forms.ModelForm):   # добавить StyleFormMixin
+class MailingRecipientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = MailingRecipient
         fields = ['email', 'personal_details', 'commentary']
@@ -24,6 +24,20 @@ class MailingRecipientForm(StyleFormMixin, forms.ModelForm):   # добавит�
 
         if email and personal_details and "spam" in personal_details:
             self.add_error('personal_details', 'personal_details не может содержать слово "spam"')
+
+
+class EmailMessageForm(StyleFormMixin, forms.ModelForm):   # добавить StyleFormMixin
+    class Meta:
+        model = EmailMessage
+        fields = ['subject', 'body']
+
+        def clean(self):
+            cleaned_data = super().clean()
+            subject = cleaned_data.get('subject')
+            body = cleaned_data.get('body')
+
+            if subject and body and "spam" in subject:
+                self.add_error('subject', 'subject не может содержать слово "spam"')
 
 
 

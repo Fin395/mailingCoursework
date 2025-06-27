@@ -1,16 +1,22 @@
 from django.urls import path
 from mailings.apps import MailingsConfig
 from mailings.views import MailingRecipientCreateView, MailingRecipientDetailView, MailingRecipientListView, \
-    MailingRecipientUpdateView, MailingRecipientDeleteView, MainPageView
+    MailingRecipientUpdateView, MailingRecipientDeleteView, MainPageView, EmailMessageCreateView, \
+    EmailMessageDetailView, EmailMessageListView, EmailMessageUpdateView, EmailMessageDeleteView
 
 app_name = MailingsConfig.name
 
 urlpatterns = [
-    path('create/', MailingRecipientCreateView.as_view(), name='mailingrecipient_create'),
-    path('<int:pk>/', MailingRecipientDetailView.as_view(), name='mailingrecipient_detail'),
-    path('', MailingRecipientListView.as_view(), name='mailingrecipient_list'),
-    path('<int:pk>/update/', MailingRecipientUpdateView.as_view(), name='mailingrecipient_update'),
-    path('<int:pk>/delete/', MailingRecipientDeleteView.as_view(), name='mailingrecipient_delete'),
-    path('main/', MainPageView.as_view(), name='mailingrecipient_main'),
+    path('create/recipient/', MailingRecipientCreateView.as_view(), name='mailingrecipient_create'),
+    path('<int:pk>/recipient/', MailingRecipientDetailView.as_view(), name='mailingrecipient_detail'),
+    path('recipients/', MailingRecipientListView.as_view(), name='mailingrecipient_list'),
+    path('<int:pk>/recipient/update/', MailingRecipientUpdateView.as_view(), name='mailingrecipient_update'),
+    path('<int:pk>/recipient/delete/', MailingRecipientDeleteView.as_view(), name='mailingrecipient_delete'),
+    path('main/', MainPageView.as_view(), name='main'),
+    path('create/message/', EmailMessageCreateView.as_view(), name='emailmessage_create'),
+    path('<int:pk>/message/', EmailMessageDetailView.as_view(), name='emailmessage_detail'),
+    path('messages/', EmailMessageListView.as_view(), name='emailmessage_list'),
+    path('<int:pk>/message/update/', EmailMessageUpdateView.as_view(), name='emailmessage_update'),
+    path('<int:pk>/message/delete/', EmailMessageDeleteView.as_view(), name='emailmessage_delete'),
 
 ]

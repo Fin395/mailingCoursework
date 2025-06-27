@@ -26,11 +26,11 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item"
-                           href="{% url 'mailings:mailingrecipient_main' %}">Главная страница</a></li>
+                           href="{% url 'mailings:main' %}">Главная страница</a></li>
                     {% if user.is_authenticated %}
                     <li><a class="dropdown-item"
                            href="{% url 'mailings:mailingrecipient_list' %}">Получатели</a></li>
-                    <li><a class="dropdown-item" href="#">Сообщения</a></li>
+                    <li><a class="dropdown-item" href="{% url 'mailings:emailmessage_list' %}">Сообщения</a></li>
                     <li><a class="dropdown-item" href="#">Рассылки</a></li>
                     <li>
                         <form method="post" action="#" style="display: inline;">
