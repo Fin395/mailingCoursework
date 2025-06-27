@@ -66,6 +66,11 @@ class EmailMessageListView(ListView):
     model = EmailMessage
     template_name = 'mailings/emailmessage_list.html'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['messages'] = EmailMessage.objects.all()
+        return context
+
 
 class EmailMessageUpdateView(UpdateView):
     model = EmailMessage

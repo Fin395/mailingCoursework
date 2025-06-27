@@ -6,8 +6,9 @@
     {% if user.is_authenticated %}
     <div class="p-2 flex-fill">Добро пожаловать в наш сервис, {{ user }}!</div>
     {% if recipients %}
-    <a class="btn btn-primary btn-sm mt-3 justify-content-md-end" href="{% url 'mailings:mailingrecipient_create' %}">Создать
-        нового получателя</a>
+    <a class="btn btn-primary" href="{% url 'mailings:mailingrecipient_create' %}">Создать нового получателя</a>
+    {% elif messages %}
+    <a class="btn btn-primary" href="{% url 'mailings:emailmessage_create' %}">Создать новое сообщение</a>
     {% endif %}
     {% else %}
     <div class="p-2 flex-fill">Для дальнейших действий необходимо авторизоваться!</div>
@@ -15,35 +16,86 @@
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
          aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Выберите необходимое действие в главном
-                меню</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Главное меню</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="dropdown mt-3">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Главное меню
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item"
-                           href="{% url 'mailings:main' %}">Главная страница</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a class="dropdown-item"
-                           href="{% url 'mailings:mailingrecipient_list' %}">Получатели</a></li>
-                    <li><a class="dropdown-item" href="{% url 'mailings:emailmessage_list' %}">Сообщения</a></li>
-                    <li><a class="dropdown-item" href="#">Рассылки</a></li>
-                    <li>
-                        <form method="post" action="#" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="dropdown-item">Выйти</button>
-                        </form>
-                    </li>
-                    {% else %}
-                    <li><a class="dropdown-item" href="#">Войти</a></li>
-                    <li><a class="dropdown-item" href="#">Зарегистрироваться</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'mailings:main' %}">Главная страница</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailings:mailingrecipient_list' %}">Получатели рассылки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailings:emailmessage_list' %}">Сообщения</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Рассылки</a>
+                </li>
+                <li>
+                    <form method="post" action="#" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link">Выйти</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Авторизация
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Вход</a></li>
+                        <li><a class="dropdown-item" href="#">Регистрация</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
