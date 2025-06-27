@@ -1,14 +1,19 @@
 {% extends 'mailings/base.html' %}
 <title>{% block title %}Данные получателя{% endblock %}</title>
 {% block content %}
-    <div class="col-md-6 p-4 ps-md-0">
-        <p>Email получателя: {{object.email}}</p>
-        <p>ФИО получателя: {{object.personal_details}}</p>
-        <p>Комментарий: {{object.commentary}}</p>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailingrecipient_list' %}">Вернуться к списку получателей</a>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailingrecipient_update' object.pk %}">Редактировать</a>
-        <a class="p-2 btn btn-outline-danger" href="{% url 'mailings:mailingrecipient_delete' object.pk %}">Удалить</a>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailingrecipient_main' %}">На главную</a>
-
+<div class="card">
+    <div class="card-header">
+        Получатель № {{ object.pk }}
     </div>
+    <div class="card-body">
+        <h5 class="card-title">Email: {{ object }}</h5>
+        <h6 class="card-title">ФИО: {{ object.personal_details }}</h6>
+        <p class="card-text">Комментарий: {{ object.commentary }}</p>
+        <a class="card-link" href="{% url 'mailings:mailingrecipient_list' %}">Вернуться к списку
+            получателей</a>
+        <a class="card-link link-outline-danger" href="{% url 'mailings:mailingrecipient_update' object.pk %}">Редактировать</a>
+        <a class="card-link" href="{% url 'mailings:mailingrecipient_delete' object.pk %}">Удалить</a>
+        <a class="card-link" href="{% url 'mailings:mailingrecipient_main' %}">На главную</a>
+    </div>
+</div>
 {% endblock %}
