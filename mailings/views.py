@@ -27,7 +27,6 @@ class MailingRecipientListView(ListView):
     model = MailingRecipient
     template_name = 'mailings/mailingrecipient_list.html'
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['recipients'] = MailingRecipient.objects.all()

@@ -39,9 +39,6 @@ class EmailMessageForm(StyleFormMixin, forms.ModelForm):   # добавить St
             if subject and body and "spam" in subject:
                 self.add_error('subject', 'subject не может содержать слово "spam"')
 
-
-
-
 # class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
 #     class Meta:
 #         model = Product
