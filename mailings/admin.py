@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MailingRecipient, EmailMessage
+from .models import MailingRecipient, EmailMessage, Mailing
 
 
 @admin.register(MailingRecipient)
@@ -12,3 +12,10 @@ class MailingRecipientAdmin(admin.ModelAdmin):
 class EmailMessageAdmin(admin.ModelAdmin):
     list_display = ('pk', 'subject', 'body')
     search_fields = ('subject', 'body')
+
+
+@admin.register(Mailing)
+class MailingAdmin(admin.ModelAdmin):
+    list_display = ('first_sending', 'close_sending', 'status', 'message', 'created_at')
+    search_fields = ('message', 'recipient')
+    list_filter = ('status', 'recipient',)
