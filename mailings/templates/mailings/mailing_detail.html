@@ -1,0 +1,19 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Детали рассылки{% endblock %}</title>
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Рассылка № {{ object.pk }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Получатель: {{ mailing.get_related_fields }}</h5>
+        <p class="card-text">Сообщение: {{ object.message.body }}</p>
+        <p class="card-text">Статус: {{ object.status }}</p>
+        <a class="card-link" href="{% url 'mailings:mailing_list' %}">Вернуться к списку
+            рассылок</a>
+        <a class="card-link link-outline-danger" href="{% url 'mailings:mailing_update' object.pk %}">Редактировать</a>
+        <a class="card-link" href="{% url 'mailings:mailing_delete' object.pk %}">Удалить</a>
+        <a class="card-link" href="{% url 'mailings:main' %}">На главную</a>
+    </div>
+</div>
+{% endblock %}

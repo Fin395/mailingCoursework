@@ -9,6 +9,8 @@
     <a class="btn btn-primary" href="{% url 'mailings:mailingrecipient_create' %}">Создать нового получателя</a>
     {% elif messages %}
     <a class="btn btn-primary" href="{% url 'mailings:emailmessage_create' %}">Создать новое сообщение</a>
+    {% elif mailings %}
+    <a class="btn btn-primary" href="{% url 'mailings:mailing_create' %}">Создать новую рассылку</a>
     {% endif %}
     {% else %}
     <div class="p-2 flex-fill">Для дальнейших действий необходимо авторизоваться!</div>
@@ -32,7 +34,7 @@
                     <a class="nav-link" href="{% url 'mailings:emailmessage_list' %}">Сообщения</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Рассылки</a>
+                    <a class="nav-link" href="{% url 'mailings:mailing_list' %}">Рассылки</a>
                 </li>
                 <li>
                     <form method="post" action="#" style="display: inline;">

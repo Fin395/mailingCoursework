@@ -1,11 +1,9 @@
 from django import forms
 
 from mailings.mixins import StyleFormMixin
-from mailings.models import MailingRecipient, EmailMessage
+from mailings.models import MailingRecipient, EmailMessage, Mailing
 
 
-#
-# from .mixins import StyleFormMixin
 # from .models import Product
 # from django.core.exceptions import ValidationError
 
@@ -38,6 +36,13 @@ class EmailMessageForm(StyleFormMixin, forms.ModelForm):   # добавить St
 
             if subject and body and "spam" in subject:
                 self.add_error('subject', 'subject не может содержать слово "spam"')
+
+
+class MailingForm(StyleFormMixin, forms.ModelForm):   # добавить StyleFormMixin
+    class Meta:
+        model = Mailing
+        fields = ['status', 'message', 'recipient']
+
 
 # class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
 #     class Meta:

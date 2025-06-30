@@ -22,7 +22,7 @@ class EmailMessage(models.Model):
     body = models.TextField(verbose_name='Тело письма')
 
     def __str__(self):
-        return 'Сообщение клиенту'
+        return f'Сообщение № {self.pk}'
 
     class Meta:
         verbose_name = "Сообщение"
@@ -44,8 +44,11 @@ class Mailing(models.Model):
     close_sending = models.DateTimeField(null=True, blank=True, verbose_name='Дата и время окончания отправки')
     status = models.CharField(max_length=9, choices=MAILING_STATUS_CHOICES, verbose_name='Статус')
     message = models.ForeignKey(EmailMessage, on_delete=models.CASCADE, related_name='messages', verbose_name='сообщение')
-    recipient = models.ManyToManyField(MailingRecipient, related_name='recipients', verbose_name='получатели')
+    recipient = models.ManyToManyField(MailingRecipient, related_name='recipients', verbose_name='получатель')
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_related_fields(self):
+        return ', '.join([str(related) for related in self.recipient.all()])
 
     def __str__(self):
         return 'Рассылка сообщения'

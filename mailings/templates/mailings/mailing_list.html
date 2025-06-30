@@ -1,0 +1,21 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Список рассылок{% endblock %}</title>
+{% block content %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for object in object_list %}
+
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Рассылка № {{ object.pk }}</h5>
+                <p class="card-text"> Тема сообщения: {{ object.message.subject|truncatechars:10 }}</p>
+                <p class="card-text"> Сообщение: {{ object.message.body|truncatechars:20 }}</p>
+                <a href="{% url 'mailings:mailing_detail' object.pk %}" class="card-link">Просмотр сообщения</a>
+                <a href="{% url 'mailings:main' %}" class="card-link">На главную</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

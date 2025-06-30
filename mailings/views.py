@@ -1,8 +1,8 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView, TemplateView
 from django.urls import reverse_lazy
-from mailings.forms import MailingRecipientForm, EmailMessageForm
-from mailings.models import MailingRecipient, EmailMessage
+from mailings.forms import MailingRecipientForm, EmailMessageForm, MailingForm
+from mailings.models import MailingRecipient, EmailMessage, Mailing
 
 
 class MainPageView(TemplateView):
@@ -85,3 +85,42 @@ class EmailMessageDeleteView(DeleteView):
     model = EmailMessage
     success_url = reverse_lazy('mailings:emailmessage_list')
     template_name = 'mailings/emailmessage_confirm_delete.html'
+
+
+class MailingCreateView(CreateView):
+    model = Mailing
+    form_class = MailingForm
+    template_name = 'mailings/mailing_form.html'
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('mailings:mailin_detail', kwargs={'pk': self.object.pk})
+
+
+class MailingDetailView(DetailView):
+    model = Mailing
+    template_name = 'mailings/mailing_detail.html'
+
+
+class MailingListView(ListView):
+    model = Mailing
+    template_name = 'mailings/mailing_list.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['mailings'] = Mailing.objects.all()
+        return context
+
+
+class MailingUpdateView(UpdateView):
+    model = Mailing
+    form_class = MailingForm
+    template_name = 'mailings/mailing_form.html'
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('mailings:mailing_detail', kwargs={'pk': self.object.pk})
+
+
+class MailingDeleteView(DeleteView):
+    model = Mailing
+    success_url = reverse_lazy('mailings:mailing_list')
+    template_name = 'mailings/mailing_confirm_delete.html'
