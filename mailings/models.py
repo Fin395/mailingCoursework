@@ -1,3 +1,5 @@
+from tkinter.constants import CASCADE
+
 from django.db import models
 
 
@@ -25,3 +27,30 @@ class EmailMessage(models.Model):
     class Meta:
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"
+
+
+class Mailing(models.Model):
+    CREATED = 'created'
+    SENT = 'sent'
+    CLOSED = 'closed'
+
+    MAILING_STATUS_CHOICES = [
+    (CREATED, 'Создана'),
+    (SENT, 'Запущена'),
+    (CLOSED, 'Завершена'),
+    ]
+
+    first_sending = models.DateTimeField(null=True, blank=True, verbose_name='Дата и время первой отправки')
+    close_sending = models.DateTimeField(null=True, blank=True, verbose_name='Дата и время окончания отправки')
+    status = models.CharField(max_length=9, choices=MAILING_STATUS_CHOICES, verbose_name='Статус')
+    message = models.ForeignKey(EmailMessage, on_delete=models.CASCADE, related_name='messages', verbose_name='сообщение')
+    recipient = models.ManyToManyField(MailingRecipient, related_name='recipients', verbose_name='получатели')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'Рассылка сообщения'
+
+    class Meta:
+        verbose_name = 'Рассылка'
+        verbose_name_plural = 'Рассылки'
+        ordering = ['created_at']
