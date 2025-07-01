@@ -36,6 +36,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'mailings:mailing_list' %}">Рассылки</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailings:mailingattempt_list' %}">Попытки рассылки</a>
+                </li>
                 <li>
                     <form method="post" action="#" style="display: inline;">
                         {% csrf_token %}

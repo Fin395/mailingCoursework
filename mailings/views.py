@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from config.settings import EMAIL_HOST_USER
 from mailings.forms import MailingRecipientForm, EmailMessageForm, MailingForm
-from mailings.models import MailingRecipient, EmailMessage, Mailing
+from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
 from django.core.mail import send_mail
 
 
@@ -146,8 +146,21 @@ class SendMailingView(View):
 
             mailing.status = 'Запущена'
             mailing.save()
+            MailingAttempt.objects.create()
 
         return redirect('mailings:mailing_detail', pk=pk)
+
+
+class MailingAttemptListView(ListView):
+    model = MailingAttempt
+    template_name = 'mailings/mailingattempt_list.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['mailingattempts'] = MailingAttempt.objects.all()
+        return context
+
+
         # if not request.user.has_perm('library.can_review_book'):
         #     return HttpResponseForbidden('У вас нет прав для рецензирования книги.')
 

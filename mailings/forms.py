@@ -1,7 +1,7 @@
 from django import forms
 
 from mailings.mixins import StyleFormMixin
-from mailings.models import MailingRecipient, EmailMessage, Mailing
+from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
 
 
 # from .models import Product
