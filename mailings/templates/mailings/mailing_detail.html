@@ -14,6 +14,11 @@
         <a class="card-link link-outline-danger" href="{% url 'mailings:mailing_update' object.pk %}">Редактировать</a>
         <a class="card-link" href="{% url 'mailings:mailing_delete' object.pk %}">Удалить</a>
         <a class="card-link" href="{% url 'mailings:main' %}">На главную</a>
+        <form action="{% url 'mailings:mailing_send' object.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Запуск</button>
+    </form>
+
     </div>
 </div>
 {% endblock %}

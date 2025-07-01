@@ -20,6 +20,7 @@ class MailingRecipient(models.Model):
 class EmailMessage(models.Model):
     subject = models.CharField(max_length=50, blank=True, null=True, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Тело письма')
+    is_sent = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Сообщение № {self.pk}'
@@ -30,9 +31,9 @@ class EmailMessage(models.Model):
 
 
 class Mailing(models.Model):
-    CREATED = 'created'
-    SENT = 'sent'
-    CLOSED = 'closed'
+    CREATED = 'Создана'
+    SENT = 'Запущена'
+    CLOSED = 'Завершена'
 
     MAILING_STATUS_CHOICES = [
     (CREATED, 'Создана'),
