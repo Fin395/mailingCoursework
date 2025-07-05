@@ -17,7 +17,9 @@ class Command(BaseCommand):
                     subject=message.subject,
                     message=message.body,
                     from_email=EMAIL_HOST_USER,
-                    recipient_list=[mailing.get_related_fields()])
+                    recipient_list=mailing.get_related_fields().split(', '),
+                    fail_silently=False)
+
             message.is_sent = True
             message.save()
             self.stdout.write(self.style.SUCCESS(f'Sent: {message.subject}'))

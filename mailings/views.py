@@ -9,11 +9,18 @@ from mailings.forms import MailingRecipientForm, EmailMessageForm, MailingForm
 from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
 from django.core.mail import send_mail
 
-from mailings.services import MailingService
+from mailings.services import MailingService, MainPageService
 
 
 class MainPageView(TemplateView):
     template_name = 'mailings/main_page.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['total_mailings'] = MainPageService.get_total_mailings()
+        context['total_active_mailings'] = MainPageService.get_active_mailings()
+        context['total_recipients'] = MainPageService.get_total_recipients()
+        return context
 
 
 class MailingRecipientCreateView(CreateView):
@@ -140,7 +147,6 @@ class MailingDeleteView(DeleteView):
 
 class SendMailingView(View):
     def post(self, request, pk):
-        # mailing = get_object_or_404(Mailing, pk=pk)
         MailingService.send_mailing(pk)
         return redirect('mailings:mailingattempt_list')
 

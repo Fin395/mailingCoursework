@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 
 from config.settings import EMAIL_HOST_USER
-from mailings.models import Mailing, MailingAttempt
+from mailings.models import Mailing, MailingAttempt, MailingRecipient
 
 
 # from datetime import timezone
@@ -69,3 +69,23 @@ class MailingService:
             return MailingAttempt.objects.create(date_time_of_attempt=timezone.now(), status=attempt_status,
                                                  server_reply=server_reply,
                                                  mailing=mailing)
+
+
+class MainPageService:
+
+    @staticmethod
+    def get_total_mailings():
+        return Mailing.objects.all().count()
+
+    @staticmethod
+    def get_active_mailings():
+        return Mailing.objects.filter(status='Запущена').count()
+
+    @staticmethod
+    def get_total_recipients():
+        return MailingRecipient.objects.all().count()
+
+
+
+
+
