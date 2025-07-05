@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView, TemplateView, View
 from django.urls import reverse_lazy
@@ -6,6 +8,8 @@ from config.settings import EMAIL_HOST_USER
 from mailings.forms import MailingRecipientForm, EmailMessageForm, MailingForm
 from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
 from django.core.mail import send_mail
+
+from mailings.services import MailingService
 
 
 class MainPageView(TemplateView):
@@ -136,19 +140,9 @@ class MailingDeleteView(DeleteView):
 
 class SendMailingView(View):
     def post(self, request, pk):
-        mailing = get_object_or_404(Mailing, pk=pk)
-        if mailing.status == 'Создана':
-            send_mail(
-                subject=mailing.message.subject,
-                message=mailing.message.body,
-                from_email=EMAIL_HOST_USER,
-                recipient_list=[mailing.get_related_fields()])
-
-            mailing.status = 'Запущена'
-            mailing.save()
-            MailingAttempt.objects.create()
-
-        return redirect('mailings:mailing_detail', pk=pk)
+        # mailing = get_object_or_404(Mailing, pk=pk)
+        MailingService.send_mailing(pk)
+        return redirect('mailings:mailingattempt_list')
 
 
 class MailingAttemptListView(ListView):

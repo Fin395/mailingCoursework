@@ -1,23 +1,28 @@
 {% extends 'mailings/base.html' %}
 <title>{% block title %}Список попыток{% endblock %}</title>
 {% block content %}
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Дата и время попытки</th>
+        <th scope="col">Рассылка</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Ответ почтового сервера</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for object in object_list %}
-
-    <div class="col">
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Попытка № {{ object.pk }}</h5>
-                <p class="card-text">Время создания: {{ object.date_time_of_attempt }}</p>
-                <p class="card-text">Статус: {{ object.status }}</p>
-                <p class="card-text">Рассылка: {{ object.mailing.pk }}</p>
-                <p class="card-text">Ответ сервера: {{ object.server_reply }}</p>
-                <a href="#" class="card-link">Просмотр попытки</a>
-                <a href="{% url 'mailings:main' %}" class="card-link">На главную</a>
-            </div>
-        </div>
-    </div>
+    <tr>
+        <th scope="row">{{object.pk}}</th>
+        <td>{{object.date_time_of_attempt}}</td>
+        <td>
+            <a class="card-link" href="{% url 'mailings:mailing_detail' object.mailing.pk %}">Рассылка № {{object.mailing.pk}}</a>
+        </td>
+        <td>{{object.status}}</td>
+        <td>{{object.server_reply}}</td>
+    </tr>
     {% endfor %}
-
-</div>
+    </tbody>
+</table>
 {% endblock %}
