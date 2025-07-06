@@ -5,13 +5,6 @@
     </a>
     {% if user.is_authenticated %}
     <div class="p-2 flex-fill">Добро пожаловать в наш сервис, {{ user }}!</div>
-    {% if recipients %}
-    <a class="btn btn-primary" href="{% url 'mailings:mailingrecipient_create' %}">Создать нового получателя</a>
-    {% elif messages %}
-    <a class="btn btn-primary" href="{% url 'mailings:emailmessage_create' %}">Создать новое сообщение</a>
-    {% elif mailings %}
-    <a class="btn btn-primary" href="{% url 'mailings:mailing_create' %}">Создать новую рассылку</a>
-    {% endif %}
     {% else %}
     <div class="p-2 flex-fill">Для дальнейших действий необходимо авторизоваться!</div>
     {% endif %}
@@ -40,7 +33,7 @@
                     <a class="nav-link" href="{% url 'mailings:mailingattempt_list' %}">Попытки рассылки</a>
                 </li>
                 <li>
-                    <form method="post" action="#" style="display: inline;">
+                    <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="nav-link">Выйти</button>
                     </form>

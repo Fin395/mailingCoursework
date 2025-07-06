@@ -1,5 +1,3 @@
-from tkinter.constants import CASCADE
-
 from django.db import models
 
 from users.models import CustomUser
@@ -11,7 +9,6 @@ class MailingRecipient(models.Model):
     commentary = models.TextField(verbose_name="Комментарий", blank=True, null=True)
     owner = models.ForeignKey(CustomUser, verbose_name='Владелец', blank=True, null=True, on_delete=models.SET_NULL, related_name='owner_recipients')
 
-
     def __str__(self):
         return self.email
 
@@ -19,6 +16,9 @@ class MailingRecipient(models.Model):
         verbose_name = "Получатель рассылки"
         verbose_name_plural = "Получатели рассылки"
         ordering = ['email']
+        permissions = [
+            ("can_block_recipient", "Can block recipient"),
+        ]
 
 
 class EmailMessage(models.Model):
@@ -54,7 +54,6 @@ class Mailing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(CustomUser, verbose_name='Владелец', blank=True, null=True, on_delete=models.SET_NULL, related_name='owner_mailings')
 
-
     def get_related_fields(self):
         return ', '.join([str(related) for related in self.recipient.all()])
 
@@ -65,6 +64,9 @@ class Mailing(models.Model):
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
         ordering = ['created_at']
+        permissions = [
+            ("can_cancel_mailing", "Can cancel mailing"),
+        ]
 
 
 class MailingAttempt(models.Model):

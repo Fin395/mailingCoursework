@@ -71,19 +71,18 @@ class MailingService:
                                                  mailing=mailing)
 
 
-class MainPageService:
-
-    @staticmethod
-    def get_total_mailings():
-        return Mailing.objects.all().count()
-
-    @staticmethod
-    def get_active_mailings():
-        return Mailing.objects.filter(status='Запущена').count()
-
-    @staticmethod
-    def get_total_recipients():
-        return MailingRecipient.objects.all().count()
+# class MainPageService:
+#
+#     def get_total_mailings(self):
+#         return Mailing.objects.filter(owner=self.user.request).count()
+#
+#     @staticmethod
+#     def get_active_mailings():
+#         return Mailing.objects.filter(status='Запущена').count()
+#
+#     @staticmethod
+#     def get_total_recipients():
+#         return MailingRecipient.objects.all().count()
 
 
 
