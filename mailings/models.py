@@ -16,9 +16,6 @@ class MailingRecipient(models.Model):
         verbose_name = "Получатель рассылки"
         verbose_name_plural = "Получатели рассылки"
         ordering = ['email']
-        permissions = [
-            ("can_block_recipient", "Can block recipient"),
-        ]
 
 
 class EmailMessage(models.Model):

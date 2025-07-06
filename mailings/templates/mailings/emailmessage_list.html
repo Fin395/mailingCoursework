@@ -1,7 +1,7 @@
 {% extends 'mailings/base.html' %}
 <title>{% block title %}Список сообщений{% endblock %}</title>
 {% block content %}
-{% if user.is_authenticated %}
+{% if user.is_authenticated and not "users.can_block_user" and "mailings.can_cancel_mailing" in perms %}
     <a class="btn btn-primary" href="{% url 'mailings:emailmessage_create' %}">Создать новое сообщение</a>
 {% endif %}
 <div class="row row-cols-1 row-cols-md-3 g-4">

@@ -8,8 +8,10 @@ from config.settings import EMAIL_HOST_USER
 from mailings.forms import MailingRecipientForm, EmailMessageForm, MailingForm
 from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
 from django.core.mail import send_mail
+from django.http import HttpResponseForbidden
 
 from mailings.services import MailingService
+from users.models import CustomUser
 
 
 class MainPageView(LoginRequiredMixin, TemplateView):
@@ -30,7 +32,6 @@ class MailingRecipientCreateView(LoginRequiredMixin, PermissionRequiredMixin, Cr
     template_name = 'mailings/mailingrecipient_form.html'
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.add_mailingrecipient'
-
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('mailings:mailingrecipient_detail', kwargs={'pk': self.object.pk})
@@ -95,7 +96,6 @@ class EmailMessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, Create
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.add_emailmessage'
 
-
     def get_success_url(self, **kwargs):
         return reverse_lazy('mailings:emailmessage_detail', kwargs={'pk': self.object.pk})
 
@@ -136,7 +136,6 @@ class EmailMessageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, Update
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.change_emailmessage'
 
-
     def get_success_url(self, **kwargs):
         return reverse_lazy('mailings:emailmessage_detail', kwargs={'pk': self.object.pk})
 
@@ -153,13 +152,12 @@ class EmailMessageDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Delete
     permission_required = 'mailings.delete_emailmessage'
 
 
-class MailingCreateView(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
+class MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
     template_name = 'mailings/mailing_form.html'
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.add_mailing'
-
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('mailings:mailing_detail', kwargs={'pk': self.object.pk})
@@ -201,7 +199,9 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        return Mailing.objects.filter(owner=self.request.user)
+        if not self.request.user.has_perm('mailings.can_cancel_mailing'):
+            return Mailing.objects.filter(owner=self.request.user)
+        return Mailing.objects.all()
 
 
 class MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -245,6 +245,7 @@ class MailingAttemptListView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
     model = MailingAttempt
     template_name = 'mailings/mailingattempt_list.html'
     login_url = reverse_lazy('users:login')
+    permission_required = 'mailings.view_mailingattempt'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
@@ -252,38 +253,15 @@ class MailingAttemptListView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
         return context
 
 
+class CancelMailingView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        mailing = get_object_or_404(Mailing, pk=pk)
 
-        # if not request.user.has_perm('library.can_review_book'):
-        #     return HttpResponseForbidden('У вас нет прав для рецензирования книги.')
+        if not request.user.has_perm('mailings.can_cancel_mailing'):
+            return HttpResponseForbidden("У вас нет прав для отключения рассылки.")
 
-        # Логика рецензирования книги
-        # book.review = request.POST.get('review')
-        # book.save()
-        #
-        # return redirect('library:book_details', pk=pk)
+        # Логика отключения рассылки
+        mailing.status = "Завершена"
+        mailing.save()
 
-# from django.urls import reverse_lazy
-# from django.views.generic.edit import CreateView
-#
-# from config.settings import EMAIL_HOST_USER
-# from .forms import CustomUserRegistrationForm
-# from django.core.mail import send_mail
-# from django.contrib.auth import login
-#
-#
-#
-# class EmailMessageSendingView(CreateView):
-#     form_class = CustomUserRegistrationForm
-#     template_name = 'users/register.html'
-#     success_url = reverse_lazy('users:login')
-#
-#     def form_valid(self, form):
-#         user = form.save()
-#         login(self.request, user)
-#         send_mail(
-#             subject='Добро пожаловать в наш сервис',
-#             message='Спасибо, что зарегистрировались в нашем сервисе!',
-#             from_email=EMAIL_HOST_USER,
-#             recipient_list=[user.email]
-#         )
-#         return super().form_valid(form)
+        return redirect('mailings:mailing_list')

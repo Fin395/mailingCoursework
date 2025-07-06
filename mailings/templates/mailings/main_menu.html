@@ -32,6 +32,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'mailings:mailingattempt_list' %}">Попытки рассылки</a>
                 </li>
+                {% if "users.can_block_user" in perms %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:users' %}">Пользователи</a>
+                </li>
+                {% endif %}
                 <li>
                     <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
                         {% csrf_token %}
