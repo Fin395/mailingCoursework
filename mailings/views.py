@@ -1,4 +1,3 @@
-from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView, TemplateView, View
@@ -63,7 +62,9 @@ class MailingRecipientListView(LoginRequiredMixin, PermissionRequiredMixin, List
         return context
 
     def get_queryset(self):
-        return MailingRecipient.objects.filter(owner=self.request.user)
+        if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user') :
+            return MailingRecipient.objects.filter(owner=self.request.user)
+        return MailingRecipient.objects.all()
 
 
 class MailingRecipientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -126,7 +127,10 @@ class EmailMessageListView(LoginRequiredMixin, PermissionRequiredMixin, ListView
         return context
 
     def get_queryset(self):
-        return EmailMessage.objects.filter(owner=self.request.user)
+        if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm(
+                'users.can_block_user'):
+            return EmailMessage.objects.filter(owner=self.request.user)
+        return EmailMessage.objects.all()
 
 
 class EmailMessageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -199,7 +203,7 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        if not self.request.user.has_perm('mailings.can_cancel_mailing'):
+        if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user'):
             return Mailing.objects.filter(owner=self.request.user)
         return Mailing.objects.all()
 

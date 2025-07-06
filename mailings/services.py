@@ -66,9 +66,9 @@ class MailingService:
                     attempt_status = MailingAttempt.UNSUCCESSFUL
                     server_reply = server_reply_for_attempt
 
-            return MailingAttempt.objects.create(date_time_of_attempt=timezone.now(), status=attempt_status,
-                                                 server_reply=server_reply,
-                                                 mailing=mailing)
+                return MailingAttempt.objects.create(date_time_of_attempt=timezone.now(), status=attempt_status,
+                                                     server_reply=server_reply,
+                                                     mailing=mailing)
 
 
 # class MainPageService:

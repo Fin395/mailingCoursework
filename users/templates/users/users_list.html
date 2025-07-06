@@ -18,7 +18,7 @@
     <tr>
         <th scope="row">{{object.pk}}</th>
         <td>{{object.email}}</td>
-        <td>{{object.is_active}}</td>
+        <td>{{object.is_active|yesno:"Активен,Заблокирован" }}</td>
         <td>
             <form action="{% url 'users:user_block' object.pk %}" method="post">
                 {% csrf_token %}

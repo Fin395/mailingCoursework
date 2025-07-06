@@ -44,7 +44,7 @@ class UserBlockView(LoginRequiredMixin, View):
     def post(self, request, pk):
         user = get_object_or_404(CustomUser, pk=pk)
 
-        if not request.user.has_perm('mailings.can_block_user'):
+        if not request.user.has_perm('users.can_block_user'):
             return HttpResponseForbidden("У вас нет прав для блокирования получателя рассылки.")
 
         # Логика блокирования получателя рассылки
@@ -54,4 +54,4 @@ class UserBlockView(LoginRequiredMixin, View):
         else:
             return HttpResponseForbidden("Вы не можете заблокировать себя")
 
-        return redirect('users:users_list')
+        return redirect('users:users')
