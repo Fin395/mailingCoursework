@@ -52,8 +52,8 @@
                         Авторизация
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Вход</a></li>
-                        <li><a class="dropdown-item" href="#">Регистрация</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:login' %}">Вход</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:registration' %}">Регистрация</a></li>
                     </ul>
                 </li>
                 {% endif %}
