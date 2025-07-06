@@ -17,7 +17,7 @@ class Command(BaseCommand):
                     subject=mailing.message.subject,
                     message=mailing.message.body,
                     from_email=EMAIL_HOST_USER,
-                    recipient_list=[mailing.get_related_fields().split(', ')],
+                    recipient_list=mailing.get_related_fields().split(', '),
                     fail_silently=False)
                 mailing.status = 'Запущена'
                 mailing.first_sending = timezone.now()

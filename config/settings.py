@@ -115,4 +115,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_REDIRECT_URL = 'mailings:main'
-
+LOGOUT_REDIRECT_URL = 'users:login'

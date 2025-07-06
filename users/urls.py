@@ -8,7 +8,7 @@ app_name = UsersConfig.name
 urlpatterns = [
     path('login/', LoginView.as_view(template_name='users/login.html'), name='login'),
     path('register/', UserRegisterView.as_view(), name='registration'),
-    path('logout/', LogoutView.as_view(next_page='mailings:main'), name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('users/users/', UsersListView.as_view(), name='users'),
     path('<int:pk>/user/block/', UserBlockView.as_view(), name='user_block'),
 

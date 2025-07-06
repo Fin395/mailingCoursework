@@ -9,6 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 from .models import CustomUser
+from django.contrib.auth.views import LogoutView
+
 
 
 class UserRegisterView(CreateView):
@@ -26,6 +28,10 @@ class UserRegisterView(CreateView):
             recipient_list=[user.email]
         )
         return super().form_valid(form)
+
+
+class UserLogoutView(LogoutView):
+    next_page = reverse_lazy('users:login')
 
 
 class UsersListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
