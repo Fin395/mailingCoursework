@@ -2,11 +2,15 @@ from tkinter.constants import CASCADE
 
 from django.db import models
 
+from users.models import CustomUser
+
 
 class MailingRecipient(models.Model):
     email = models.CharField(unique=True, max_length=100, verbose_name='Email')
     personal_details = models.CharField(max_length=100, verbose_name='ФИО')
     commentary = models.TextField(verbose_name="Комментарий", blank=True, null=True)
+    owner = models.ForeignKey(CustomUser, verbose_name='Владелец', blank=True, null=True, on_delete=models.SET_NULL, related_name='owner_recipients')
+
 
     def __str__(self):
         return self.email
@@ -21,6 +25,7 @@ class EmailMessage(models.Model):
     subject = models.CharField(max_length=50, blank=True, null=True, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Тело письма')
     is_sent = models.BooleanField(default=False)
+    owner = models.ForeignKey(CustomUser, verbose_name='Владелец', blank=True, null=True, on_delete=models.SET_NULL, related_name='owner_messages')
 
     def __str__(self):
         return f'Сообщение № {self.pk}'
@@ -47,6 +52,8 @@ class Mailing(models.Model):
     message = models.ForeignKey(EmailMessage, on_delete=models.CASCADE, related_name='messages', verbose_name='сообщение')
     recipient = models.ManyToManyField(MailingRecipient, related_name='recipients', verbose_name='получатель')
     created_at = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(CustomUser, verbose_name='Владелец', blank=True, null=True, on_delete=models.SET_NULL, related_name='owner_mailings')
+
 
     def get_related_fields(self):
         return ', '.join([str(related) for related in self.recipient.all()])

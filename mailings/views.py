@@ -31,6 +31,13 @@ class MailingRecipientCreateView(CreateView):
     def get_success_url(self, **kwargs):
         return reverse_lazy('mailings:mailingrecipient_detail', kwargs={'pk': self.object.pk})
 
+    def form_valid(self, form):
+        recipient = form.save()
+        user = self.request.user
+        recipient.owner = user
+        recipient.save()
+        return super().form_valid(form)
+
 
 class MailingRecipientDetailView(DetailView):
     model = MailingRecipient
@@ -45,6 +52,9 @@ class MailingRecipientListView(ListView):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['recipients'] = MailingRecipient.objects.all()
         return context
+
+    def get_queryset(self):
+        return MailingRecipient.objects.filter(owner=self.request.user)
 
 
 class MailingRecipientUpdateView(UpdateView):
