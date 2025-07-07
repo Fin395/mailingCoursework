@@ -22,8 +22,9 @@ class MailingService:
                         from_email=EMAIL_HOST_USER,
                         recipient_list=[recipient],
                         fail_silently=False)
-                    mailing.status = 'Запущена'
-                    mailing.first_sending = timezone.now()
+                    if mailing.status == 'Создана':
+                        mailing.status = 'Запущена'
+                        mailing.first_sending = timezone.now()
                     attempt_status = MailingAttempt.SUCCESSFUL
                     server_reply = ''
                 except Exception as e:
