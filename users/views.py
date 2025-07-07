@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
-from django.views.generic import ListView, View
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import ListView, View, DetailView
 from config.settings import EMAIL_HOST_USER
 from .forms import CustomUserRegistrationForm
 from django.core.mail import send_mail
@@ -27,6 +27,28 @@ class UserRegisterView(CreateView):
             from_email=EMAIL_HOST_USER,
             recipient_list=[user.email]
         )
+        return super().form_valid(form)
+
+
+class UserDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    model = CustomUser
+    template_name = 'users/user_detail.html'
+    login_url = reverse_lazy('users:login')
+    permission_required = 'users.view_customuser'
+
+
+class UserUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = CustomUserRegistrationForm
+    template_name = 'users/registration.html'
+    login_url = reverse_lazy('users:login')
+    permission_required = 'user.change_customuser'
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('users:user_detail', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
 

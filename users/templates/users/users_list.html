@@ -10,21 +10,16 @@
         <th scope="col">ID</th>
         <th scope="col">Email</th>
         <th scope="col">Статус</th>
-        <th scope="col">Действие</th>
     </tr>
     </thead>
     <tbody>
     {% for object in object_list %}
     <tr>
         <th scope="row">{{object.pk}}</th>
-        <td>{{object.email}}</td>
-        <td>{{object.is_active|yesno:"Активен,Заблокирован" }}</td>
         <td>
-            <form action="{% url 'users:user_block' object.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Заблокировать</button>
-            </form>
+            <a class="card-link" href="{% url 'users:user_detail' object.pk %}">{{object.email}}</a>
         </td>
+        <td>{{object.is_active|yesno:"Активен,Заблокирован" }}</td>
     </tr>
     {% endfor %}
     </tbody>
