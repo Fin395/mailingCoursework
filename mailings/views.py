@@ -56,10 +56,10 @@ class MailingRecipientListView(LoginRequiredMixin, PermissionRequiredMixin, List
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.view_mailingrecipient'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context['recipients'] = MailingRecipient.objects.all()
-        return context
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(object_list=object_list, **kwargs)
+    #     context['recipients'] = MailingRecipient.objects.all()
+    #     return context
 
     def get_queryset(self):
         if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user') :
@@ -121,10 +121,10 @@ class EmailMessageListView(LoginRequiredMixin, PermissionRequiredMixin, ListView
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.view_emailmessage'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context['messages'] = EmailMessage.objects.all()
-        return context
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(object_list=object_list, **kwargs)
+    #     context['messages'] = EmailMessage.objects.all()
+    #     return context
 
     def get_queryset(self):
         if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm(
@@ -185,10 +185,10 @@ class MailingDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView)
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.view_mailing'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context['mailings'] = Mailing.objects.all()
-        return context
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(object_list=object_list, **kwargs)
+    #     context['mailings'] = Mailing.objects.all()
+    #     return context
 
 
 class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -197,10 +197,10 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.view_mailing'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context['mailings'] = Mailing.objects.all()
-        return context
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(object_list=object_list, **kwargs)
+    #     context['mailings'] = Mailing.objects.all()
+    #     return context
 
     def get_queryset(self):
         if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user'):
@@ -251,10 +251,15 @@ class MailingAttemptListView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
     login_url = reverse_lazy('users:login')
     permission_required = 'mailings.view_mailingattempt'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=object_list, **kwargs)
-        context['mailingattempts'] = MailingAttempt.objects.all()
-        return context
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(object_list=object_list, **kwargs)
+    #     context['mailingattempts'] = MailingAttempt.objects.all()
+    #     return context
+
+    # def get_queryset(self):
+    #     if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user') :
+    #         return MailingAttempt.objects.filter(object.mailing.owner=self.request.user)
+    #     return MailingAttempt.objects.all()
 
 
 class CancelMailingView(LoginRequiredMixin, View):

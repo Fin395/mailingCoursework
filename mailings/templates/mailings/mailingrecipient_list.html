@@ -1,7 +1,7 @@
 {% extends 'mailings/base.html' %}
 <title>{% block title %}Список получателей{% endblock %}</title>
 {% block content %}
-{% if user.is_authenticated and not "users.can_block_user" and "mailings.can_cancel_mailing" in perms %}
+{% if user.is_authenticated and not "users.can_block_user" in perms and not "mailings.can_cancel_mailing" in perms %}
 <a class="btn btn-primary" href="{% url 'mailings:mailingrecipient_create' %}">Создать нового получателя</a>
 {% endif %}
 <div class="row row-cols-1 row-cols-md-3 g-4">

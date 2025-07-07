@@ -14,13 +14,13 @@
         <a class="card-link link-outline-danger" href="{% url 'mailings:mailing_update' object.pk %}">Редактировать</a>
         <a class="card-link" href="{% url 'mailings:mailing_delete' object.pk %}">Удалить</a>
         <a class="card-link" href="{% url 'mailings:main' %}">На главную</a>
-        {% if not "mailings.can_cancel_mailing" and not "users.can_block_user" in perms %}
+        {% if not "mailings.can_cancel_mailing" in perms and not "users.can_block_user" in perms %}
         <form action="{% url 'mailings:mailing_send' object.pk %}" method="post">
             {% csrf_token %}
             <button type="submit">Запуск</button>
         </form>
         {% endif %}
-        {% if "mailings.can_cancel_mailing" and "users.can_block_user" in perms %}
+        {% if "mailings.can_cancel_mailing" in perms and "users.can_block_user" in perms %}
         <form action="{% url 'mailings:mailing_cancel' object.pk %}" method="post">
             {% csrf_token %}
             <button type="submit">Завершить</button>

@@ -12,7 +12,7 @@
             пользователей</a>
         <a class="card-link link-outline-danger" href="{% url 'users:user_update' object.pk %}">Редактировать</a>
         <a class="card-link" href="{% url 'mailings:main' %}">На главную</a>
-        {% if "mailings.can_cancel_mailing" and "users.can_block_user" in perms %}
+        {% if "mailings.can_cancel_mailing" in perms and "users.can_block_user" in perms %}
         <form action="{% url 'users:user_block' object.pk %}" method="post">
             {% csrf_token %}
             <button type="submit">Заблокировать</button>
