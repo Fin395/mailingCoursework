@@ -1,10 +1,16 @@
 {% extends 'mailings/base.html' %}
 
 {% block content %}
-  <h2>Вход</h2>
-  <form method="post">
+
+<div class="card text-center">
+    <div class="card-body">
+        <h5 class="card-title">Добро пожаловать в сервис рассылки сообщений!</h5>
+    </div>
+</div>
+<h2>Вход</h2>
+<form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Войти</button>
-  </form>
+</form>
 {% endblock %}

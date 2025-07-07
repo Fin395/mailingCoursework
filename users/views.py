@@ -10,6 +10,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 from .models import CustomUser
 from django.contrib.auth.views import LogoutView
+from django.core.exceptions import PermissionDenied
+
 
 
 
@@ -36,13 +38,19 @@ class UserDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     login_url = reverse_lazy('users:login')
     permission_required = 'users.view_customuser'
 
+    def get_object(self, queryset=None):
+        user_to_view = super().get_object(queryset)
+        user = self.request.user
+        if user_to_view != user and not user.has_perm('mailings.can_cancel_mailing'):
+            raise PermissionDenied
+        return user_to_view
 
-class UserUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser
     form_class = CustomUserRegistrationForm
     template_name = 'users/registration.html'
     login_url = reverse_lazy('users:login')
-    permission_required = 'user.change_customuser'
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('users:user_detail', kwargs={'pk': self.object.pk})

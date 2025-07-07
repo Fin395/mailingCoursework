@@ -8,7 +8,7 @@ from mailings.forms import MailingRecipientForm, EmailMessageForm, MailingForm
 from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
 from django.core.mail import send_mail
 from django.http import HttpResponseForbidden
-
+from django.utils import timezone
 from mailings.services import MailingService
 from users.models import CustomUser
 
@@ -266,6 +266,7 @@ class CancelMailingView(LoginRequiredMixin, View):
 
         # Логика отключения рассылки
         mailing.status = "Завершена"
+        mailing.close_sending = timezone.now()
         mailing.save()
 
         return redirect('mailings:mailing_list')
