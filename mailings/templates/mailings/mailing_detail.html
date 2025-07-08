@@ -8,6 +8,7 @@
     <div class="card-body">
         <h5 class="card-title">Получатель: {{ mailing.get_related_fields }}</h5>
         <p class="card-text">Сообщение: {{ object.message.body }}</p>
+        <p class="card-text">Владелец: {{ object.owner }}</p>
         <p class="card-text">Статус: {{ object.status }}</p>
         <a class="card-link" href="{% url 'mailings:mailing_list' %}">Вернуться к списку
             рассылок</a>

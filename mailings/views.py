@@ -62,7 +62,7 @@ class MailingRecipientListView(LoginRequiredMixin, PermissionRequiredMixin, List
     #     return context
 
     def get_queryset(self):
-        if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user') :
+        if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user'):
             return MailingRecipient.objects.filter(owner=self.request.user)
         return MailingRecipient.objects.all()
 
@@ -256,10 +256,10 @@ class MailingAttemptListView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
     #     context['mailingattempts'] = MailingAttempt.objects.all()
     #     return context
 
-    # def get_queryset(self):
-    #     if not self.request.user.has_perm('mailings.can_cancel_mailing') and not self.request.user.has_perm('users.can_block_user') :
-    #         return MailingAttempt.objects.filter(object.mailing.owner=self.request.user)
-    #     return MailingAttempt.objects.all()
+    def get_queryset(self):
+        if self.request.user.has_perm('mailings.can_cancel_mailing') and self.request.user.has_perm('users.can_block_user'):
+            return MailingAttempt.objects.all()
+        return MailingAttempt.objects.filter(mailing__owner=self.request.user)
 
 
 class CancelMailingView(LoginRequiredMixin, View):

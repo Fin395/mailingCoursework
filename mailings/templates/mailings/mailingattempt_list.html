@@ -13,7 +13,7 @@
     </thead>
     <tbody>
     {% for object in object_list %}
-    {% if object.mailing.owner == user %}
+
     <tr>
         <th scope="row">{{object.pk}}</th>
         <td>{{object.date_time_of_attempt}}</td>
@@ -23,7 +23,6 @@
         <td>{{object.status}}</td>
         <td>{{object.server_reply}}</td>
     </tr>
-        {% endif %}
 
     {% endfor %}
     </tbody>
