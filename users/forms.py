@@ -12,5 +12,3 @@ class CustomUserRegistrationForm(UserCreationForm):
         if phone_number and not phone_number.isdigit():
             raise forms.ValidationError('Phone number must contain only digits.')
         return phone_number
-
-
