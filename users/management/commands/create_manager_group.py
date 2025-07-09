@@ -1,8 +1,8 @@
 from django.contrib.auth.models import Group, Permission
 from django.core.management.base import BaseCommand
 
-class Command(BaseCommand):
 
+class Command(BaseCommand):
     help = 'Создание группы Менеджеры'
 
     def handle(self, *args, **kwargs):

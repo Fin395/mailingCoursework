@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 
 from config.settings import EMAIL_HOST_USER
-from mailings.models import Mailing, MailingAttempt, MailingRecipient
+from mailings.models import Mailing, MailingAttempt
 
 
 class MailingService:
@@ -33,6 +33,6 @@ class MailingService:
                     server_reply = server_reply_for_attempt
 
                 MailingAttempt.objects.create(date_time_of_attempt=timezone.now(), status=attempt_status,
-                                                     server_reply=server_reply,
-                                                     mailing=mailing)
+                                              server_reply=server_reply,
+                                              mailing=mailing)
         mailing.save()

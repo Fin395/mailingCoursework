@@ -1,47 +1,16 @@
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView, View, DetailView
 from config.settings import EMAIL_HOST_USER
 from .forms import CustomUserRegistrationForm
 from django.core.mail import send_mail
-from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 from .models import CustomUser
-from django.contrib.auth.views import LogoutView, LoginView
+from django.contrib.auth.views import LogoutView
 from django.core.exceptions import PermissionDenied
 import secrets
-from urllib.parse import urlsplit, urlunsplit
-
-from django.conf import settings
-
-# Avoid shadowing the login() and logout() views below.
-from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_not_required, login_required
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-    PasswordChangeForm,
-    PasswordResetForm,
-    SetPasswordForm,
-)
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import ImproperlyConfigured, ValidationError
-from django.http import HttpResponseRedirect, QueryDict
-from django.shortcuts import resolve_url
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.utils.http import url_has_allowed_host_and_scheme, urlsafe_base64_decode
-from django.utils.translation import gettext_lazy as _
-from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView
 
 
 class UserRegisterView(CreateView):
@@ -64,6 +33,7 @@ class UserRegisterView(CreateView):
             recipient_list=[user.email]
         )
         return super().form_valid(form)
+
 
 def email_verification(request, token):
     user = get_object_or_404(CustomUser, token=token)
@@ -106,6 +76,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
             raise PermissionDenied
         return CustomUser.objects.filter(pk=self.request.user.pk)
 
+
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('users:login')
 
@@ -129,7 +100,6 @@ class UserBlockView(LoginRequiredMixin, View):
         if not request.user.has_perm('users.can_block_user'):
             return HttpResponseForbidden("У вас нет прав для блокирования получателя рассылки.")
 
-        # Логика блокирования получателя рассылки
         if not request.user == user.email:
             user.is_active = False
             user.save()

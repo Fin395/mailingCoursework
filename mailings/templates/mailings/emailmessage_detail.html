@@ -10,7 +10,8 @@
         <p class="card-text">Тело: {{ object.body }}</p>
         <a class="card-link" href="{% url 'mailings:emailmessage_list' %}">Вернуться к списку
             сообщений</a>
-        <a class="card-link link-outline-danger" href="{% url 'mailings:emailmessage_update' object.pk %}">Редактировать</a>
+        <a class="card-link link-outline-danger"
+           href="{% url 'mailings:emailmessage_update' object.pk %}">Редактировать</a>
         <a class="card-link" href="{% url 'mailings:emailmessage_delete' object.pk %}">Удалить</a>
         <a class="card-link" href="{% url 'mailings:main' %}">На главную</a>
     </div>

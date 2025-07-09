@@ -1,10 +1,13 @@
 from django.urls import path
 from mailings.apps import MailingsConfig
-from mailings.views import MailingRecipientCreateView, MailingRecipientDetailView, MailingRecipientListView, \
-    MailingRecipientUpdateView, MailingRecipientDeleteView, MainPageView, EmailMessageCreateView, \
-    EmailMessageDetailView, EmailMessageListView, EmailMessageUpdateView, EmailMessageDeleteView, MailingCreateView, \
-    MailingDetailView, MailingListView, MailingUpdateView, MailingDeleteView, SendMailingView, MailingAttemptListView, \
-    CancelMailingView
+from mailings.views import (MailingRecipientCreateView, MailingRecipientDetailView, MailingRecipientListView,
+                            MailingRecipientUpdateView, MailingRecipientDeleteView, MainPageView,
+                            EmailMessageCreateView,
+                            EmailMessageDetailView, EmailMessageListView, EmailMessageUpdateView,
+                            EmailMessageDeleteView, MailingCreateView,
+                            MailingDetailView, MailingListView, MailingUpdateView, MailingDeleteView, SendMailingView,
+                            MailingAttemptListView,
+                            CancelMailingView)
 
 app_name = MailingsConfig.name
 
@@ -28,6 +31,5 @@ urlpatterns = [
     path('<int:pk>/mailing/send/', SendMailingView.as_view(), name='mailing_send'),
     path('mailingattempts/', MailingAttemptListView.as_view(), name='mailingattempt_list'),
     path('<int:pk>/mailing/cancel/', CancelMailingView.as_view(), name='mailing_cancel'),
-
 
 ]

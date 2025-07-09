@@ -18,7 +18,8 @@
         <th scope="row">{{object.pk}}</th>
         <td>{{object.date_time_of_attempt}}</td>
         <td>
-            <a class="card-link" href="{% url 'mailings:mailing_detail' object.mailing.pk %}">Рассылка № {{object.mailing.pk}}</a>
+            <a class="card-link" href="{% url 'mailings:mailing_detail' object.mailing.pk %}">Рассылка №
+                {{object.mailing.pk}}</a>
         </td>
         <td>{{object.status}}</td>
         <td>{{object.server_reply}}</td>

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('mailings', '0005_emailmessage_is_sent'),
     ]
@@ -13,6 +12,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mailing',
             name='status',
-            field=models.CharField(choices=[('Создана', 'Создана'), ('Запущена', 'Запущена'), ('Завершена', 'Завершена')], max_length=9, verbose_name='Статус'),
+            field=models.CharField(
+                choices=[('Создана', 'Создана'), ('Запущена', 'Запущена'), ('Завершена', 'Завершена')], max_length=9,
+                verbose_name='Статус'),
         ),
     ]

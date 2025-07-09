@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('mailings', '0008_emailmessage_owner_mailing_owner_and_more'),
     ]
@@ -12,10 +11,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='mailing',
-            options={'ordering': ['created_at'], 'permissions': [('can_cancel_mailing', 'Can cancel mailing')], 'verbose_name': 'Рассылка', 'verbose_name_plural': 'Рассылки'},
+            options={'ordering': ['created_at'], 'permissions': [('can_cancel_mailing', 'Can cancel mailing')],
+                     'verbose_name': 'Рассылка', 'verbose_name_plural': 'Рассылки'},
         ),
         migrations.AlterModelOptions(
             name='mailingrecipient',
-            options={'ordering': ['email'], 'permissions': [('can_block_recipient', 'Can block recipient')], 'verbose_name': 'Получатель рассылки', 'verbose_name_plural': 'Получатели рассылки'},
+            options={'ordering': ['email'], 'permissions': [('can_block_recipient', 'Can block recipient')],
+                     'verbose_name': 'Получатель рассылки', 'verbose_name_plural': 'Получатели рассылки'},
         ),
     ]

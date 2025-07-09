@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('mailings', '0007_mailingattempt'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
@@ -16,16 +15,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='emailmessage',
             name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='owner_messages', to=settings.AUTH_USER_MODEL, verbose_name='Владелец'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='owner_messages', to=settings.AUTH_USER_MODEL,
+                                    verbose_name='Владелец'),
         ),
         migrations.AddField(
             model_name='mailing',
             name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='owner_mailings', to=settings.AUTH_USER_MODEL, verbose_name='Владелец'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='owner_mailings', to=settings.AUTH_USER_MODEL,
+                                    verbose_name='Владелец'),
         ),
         migrations.AddField(
             model_name='mailingrecipient',
             name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='owner_recipients', to=settings.AUTH_USER_MODEL, verbose_name='Владелец'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='owner_recipients', to=settings.AUTH_USER_MODEL,
+                                    verbose_name='Владелец'),
         ),
     ]

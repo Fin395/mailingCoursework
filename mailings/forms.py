@@ -1,14 +1,8 @@
 from django import forms
 
 from mailings.mixins import StyleFormMixin
-from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
+from mailings.models import MailingRecipient, EmailMessage, Mailing
 
-
-# from .models import Product
-# from django.core.exceptions import ValidationError
-
-
-# FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
 class MailingRecipientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
@@ -24,7 +18,7 @@ class MailingRecipientForm(StyleFormMixin, forms.ModelForm):
             self.add_error('personal_details', 'personal_details не может содержать слово "spam"')
 
 
-class EmailMessageForm(StyleFormMixin, forms.ModelForm):   # добавить StyleFormMixin
+class EmailMessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = EmailMessage
         fields = ['subject', 'body']

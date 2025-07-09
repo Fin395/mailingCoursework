@@ -3,14 +3,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView, TemplateView, View
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
-from config.settings import EMAIL_HOST_USER, CACHE_ENABLED
+from config.settings import CACHE_ENABLED
 from mailings.forms import MailingRecipientForm, EmailMessageForm, MailingForm
 from mailings.models import MailingRecipient, EmailMessage, Mailing, MailingAttempt
-from django.core.mail import send_mail
 from django.http import HttpResponseForbidden
 from django.utils import timezone
 from mailings.services import MailingService
-from users.models import CustomUser
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from django.utils.decorators import method_decorator
@@ -67,10 +65,10 @@ class MailingRecipientListView(LoginRequiredMixin, PermissionRequiredMixin, List
             queryset = MailingRecipient.objects.all()
 
         if CACHE_ENABLED:
-           cached_queryset = cache.get('mailing_recipients')
-           if not cached_queryset:
-               cache.set('mailing_recipients', queryset, 30)
-        return queryset
+            cached_queryset = cache.get('mailing_recipients')
+            if not cached_queryset:
+                cache.set('mailing_recipients', queryset, 30)
+            return queryset
 
 
 class MailingRecipientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -258,7 +256,6 @@ class CancelMailingView(LoginRequiredMixin, View):
         if not request.user.has_perm('mailings.can_cancel_mailing'):
             return HttpResponseForbidden("У вас нет прав для отключения рассылки.")
 
-        # Логика отключения рассылки
         mailing.status = "Завершена"
         mailing.close_sending = timezone.now()
         mailing.save()

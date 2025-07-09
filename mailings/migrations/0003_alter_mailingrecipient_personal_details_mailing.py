@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('mailings', '0002_emailmessage'),
     ]
@@ -20,12 +19,18 @@ class Migration(migrations.Migration):
             name='Mailing',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_sending', models.DateTimeField(blank=True, null=True, verbose_name='Дата и время первой отправки')),
-                ('close_sending', models.DateTimeField(blank=True, null=True, verbose_name='Дата и время окончания отправки')),
-                ('status', models.CharField(choices=[('created', 'Создана'), ('sent', 'Запущена'), ('closed', 'Завершена')], max_length=9, verbose_name='Статус')),
+                ('first_sending',
+                 models.DateTimeField(blank=True, null=True, verbose_name='Дата и время первой отправки')),
+                ('close_sending',
+                 models.DateTimeField(blank=True, null=True, verbose_name='Дата и время окончания отправки')),
+                ('status',
+                 models.CharField(choices=[('created', 'Создана'), ('sent', 'Запущена'), ('closed', 'Завершена')],
+                                  max_length=9, verbose_name='Статус')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('message', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='mailings.emailmessage', verbose_name='сообщение')),
-                ('recipient', models.ManyToManyField(related_name='recipients', to='mailings.mailingrecipient', verbose_name='получатели')),
+                ('message', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages',
+                                              to='mailings.emailmessage', verbose_name='сообщение')),
+                ('recipient', models.ManyToManyField(related_name='recipients', to='mailings.mailingrecipient',
+                                                     verbose_name='получатели')),
             ],
             options={
                 'verbose_name': 'Рассылка',

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('mailings', '0003_alter_mailingrecipient_personal_details_mailing'),
     ]
@@ -13,6 +12,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mailing',
             name='recipient',
-            field=models.ManyToManyField(related_name='recipients', to='mailings.mailingrecipient', verbose_name='получатель'),
+            field=models.ManyToManyField(related_name='recipients', to='mailings.mailingrecipient',
+                                         verbose_name='получатель'),
         ),
     ]

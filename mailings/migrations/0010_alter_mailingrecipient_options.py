@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('mailings', '0009_alter_mailing_options_alter_mailingrecipient_options'),
     ]
@@ -12,6 +11,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='mailingrecipient',
-            options={'ordering': ['email'], 'verbose_name': 'Получатель рассылки', 'verbose_name_plural': 'Получатели рассылки'},
+            options={'ordering': ['email'], 'verbose_name': 'Получатель рассылки',
+                     'verbose_name_plural': 'Получатели рассылки'},
         ),
     ]
