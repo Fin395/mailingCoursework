@@ -1,0 +1,27 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Список пользователей{% endblock %}</title>
+{% block content %}
+<div>
+    <h4>Пользователи</h4>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Email</th>
+        <th scope="col">Статус</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+    <tr>
+        <th scope="row">{{object.pk}}</th>
+        <td>
+            <a class="card-link" href="{% url 'users:user_detail' object.pk %}">{{object.email}}</a>
+        </td>
+        <td>{{object.is_active|yesno:"Активен,Заблокирован" }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

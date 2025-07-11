@@ -1,0 +1,23 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Данные пользователя{% endblock %}</title>
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        Пользователь {{ object }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Телефон: {{ object.phone_number }}</h5>
+        <h6 class="card-title">Страна: {{ object.country }}</h6>
+        <a class="card-link" href="{% url 'users:users' %}">Вернуться к списку
+            пользователей</a>
+        <a class="card-link link-outline-danger" href="{% url 'users:user_update' object.pk %}">Редактировать</a>
+        <a class="card-link" href="{% url 'mailings:main' %}">На главную</a>
+        {% if "mailings.can_cancel_mailing" in perms and "users.can_block_user" in perms %}
+        <form action="{% url 'users:user_block' object.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Заблокировать</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
