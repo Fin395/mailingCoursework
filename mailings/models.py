@@ -27,7 +27,7 @@ class EmailMessage(models.Model):
                               related_name='owner_messages')
 
     def __str__(self):
-        return f'Сообщение № {self.pk}'
+        return f"Сообщение по теме '{self.subject}'"
 
     class Meta:
         verbose_name = "Сообщение"

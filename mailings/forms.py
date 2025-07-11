@@ -41,3 +41,4 @@ class MailingForm(StyleFormMixin, forms.ModelForm):   # добавить StyleFo
         user = kwargs.pop('user')
         super(MailingForm, self).__init__(*args, **kwargs)
         self.fields['recipient'].queryset = MailingRecipient.objects.filter(owner=user)
+        self.fields['message'].queryset = EmailMessage.objects.filter(owner=user)
