@@ -1,0 +1,31 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Список попыток{% endblock %}</title>
+{% block content %}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Дата и время попытки</th>
+        <th scope="col">Рассылка</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Ответ почтового сервера</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+
+    <tr>
+        <th scope="row">{{object.pk}}</th>
+        <td>{{object.date_time_of_attempt}}</td>
+        <td>
+            <a class="card-link" href="{% url 'mailings:mailing_detail' object.mailing.pk %}">Рассылка №
+                {{object.mailing.pk}}</a>
+        </td>
+        <td>{{object.status}}</td>
+        <td>{{object.server_reply}}</td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'mailings/base.html' %}
+<title>{% block title %}Новая рассылка{% endblock %}</title>
+{% block content %}
+<div class="mb-3">
+    <h2>Рассылка</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        {% if object %}
+        <a href="{% url 'mailings:mailing_detail' object.pk %}" class="btn btn-secondary">Отмена</a>
+        {% else %}
+        <a href="{% url 'mailings:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
+
+
+
+

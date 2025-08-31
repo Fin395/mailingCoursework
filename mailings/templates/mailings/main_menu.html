@@ -1,0 +1,116 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+       aria-controls="offcanvasExample">
+        В главное меню
+    </a>
+    {% if user.is_authenticated %}
+    <div class="p-2 flex-fill">Добро пожаловать в наш сервис, {{ user }}!</div>
+    {% else %}
+    <div class="p-2 flex-fill">Для дальнейших действий необходимо авторизоваться!</div>
+    {% endif %}
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+         aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Главное меню</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'mailings:main' %}">Главная страница</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailings:mailingrecipient_list' %}">Получатели рассылки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailings:emailmessage_list' %}">Сообщения</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailings:mailing_list' %}">Рассылки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailings:mailingattempt_list' %}">Попытки рассылки</a>
+                </li>
+                {% if "mailings.can_cancel_mailing" in perms and "users.can_block_user" in perms %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:users' %}">Пользователи</a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Ваш профиль
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="{% url 'users:user_detail' user.pk %}">Просмотр</a></li>
+                        <li><a class="nav-link" href="{% url 'users:user_update' user.pk %}">Редактировать</a></li>
+                        <li>
+                            <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link">Выйти</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+
+
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Авторизация
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'users:login' %}">Вход</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:registration' %}">Регистрация</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
